@@ -5,6 +5,8 @@ Which in turn is a C++ port of [OpenAI's Whisper](https://github.com/openai/whis
 
 Download WhisperDesktop.zip from the “Releases” section of this repository, unpack the ZIP, and run WhisperDesktop.exe.
 
+The desktop application now ships with integrated [RNNoise](https://github.com/xiph/rnnoise) neural denoising, so no additional downloads or configuration steps are required to benefit from the noise suppression.
+
 On the first screen it will ask you to download a model.<br/>
 I recommend `ggml-medium.bin` (1.42GB in size), because I’ve mostly tested the software with that model.<br/>
 ![Load Model Screen](gui-load-model.png)
@@ -38,6 +40,8 @@ of `R16_FLOAT` buffers since D3D version 10.0
 * Media Foundation for audio handling, supports most audio and video formats (with the notable exception of Ogg Vorbis),
 and most audio capture devices which work on Windows (except some professional ones, which only implementing [ASIO](https://en.wikipedia.org/wiki/Audio_Stream_Input/Output) API).
 
+* Neural noise suppression based on the RNNoise project. Every audio file and capture stream is pre-processed to reduce stationary background noise before being fed into the Whisper models.
+
 * Voice activity detection for audio capture.<br/>
 The implementation is based on the [2009 article](https://www.researchgate.net/publication/255667085_A_simple_but_efficient_real-time_voice_activity_detection_algorithm)
 “A simple but efficient real-time voice activity detection algorithm” by Mohammad Moattar and Mahdi Homayoonpoor.
@@ -65,12 +69,14 @@ On the CPU side, the library requires [AVX1](https://en.wikipedia.org/wiki/Advan
 
 3. Switch to `Release` configuration
 
-4. Build and run `CompressShaders` C# project, in the `Tools` subfolder of the solution.
-To run that project, right click in visual studio, “Set as startup project”, then in the main menu of VS “Debug / Start Without Debugging”.
+4. Build the `RNNoise` project located under `ThirdParty/RNNoise`. This produces the neural denoiser static library that is linked into `Whisper`. Building the entire solution in Visual Studio will pull it in automatically, but running it once up front makes it obvious when the dependency fails to compile on your machine.
+
+5. Build and run `CompressShaders` C# project, in the `Tools` subfolder of the solution.
+To run that project, right click in Visual Studio, “Set as startup project”, then in the main menu of VS “Debug / Start Without Debugging”.
 When completed successfully, you should see a console window with a line like that:<br/>
 `Compressed 46 compute shaders, 123.5 kb -> 18.0 kb`
 
-5. Build `Whisper` project to get the native DLL, or `WhisperNet` for the C# wrapper and nuget package, or the examples.
+6. Build `Whisper` project to get the native DLL, or `WhisperNet` for the C# wrapper and NuGet package, or the examples.
 
 ## Other Notes
 
@@ -87,6 +93,8 @@ If you gonna debug HLSL shaders, use the debug build of the DLL, it includes deb
 The repository includes a lot of code which was only used for development:
 couple alternative model implementations, compatible FP64 versions of some compute shaders, debug tracing and the tool to compare the traces, etc.<br/>
 That stuff is disabled by preprocessor macros or `constexpr` flags, I hope it’s fine to keep here.
+
+Third-party source for the RNNoise denoiser lives under `ThirdParty/RNNoise` and is distributed under the 3-clause BSD license. See `ThirdParty/RNNoise/COPYING` for details.
 
 ## Performance Notes
 

@@ -95,6 +95,9 @@
     <ProjectReference Include="..\ComLightLib\ComLightLib.vcxproj">
       <Project>{52f486e7-830c-45d8-be47-e76b5aab2772}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\ThirdParty\RNNoise\RNNoise.vcxproj">
+      <Project>{BAD9EBAB-8F1E-468A-873C-D45413628F05}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPU\BufferAllocator.cpp" />
@@ -152,6 +155,7 @@
     <ClCompile Include="Whisper\ContextImpl.diarize.cpp" />
     <ClCompile Include="Whisper\ModelBuffers.clone.cpp" />
     <ClCompile Include="Whisper\voiceActivityDetection.cpp" />
+    <ClCompile Include="Audio\AudioPreprocessor.cpp" />
     <ClCompile Include="Whisper\ContextImpl.capture.cpp" />
     <ClCompile Include="Whisper\MelStreamer.cpp" />
     <ClCompile Include="Whisper\melSpectrogram.cpp" />
@@ -235,6 +239,7 @@
     <ClInclude Include="API\iMediaFoundation.cl.h" />
     <ClInclude Include="API\iTranscribeResult.cl.h" />
     <ClInclude Include="API\sLanguageList.h" />
+    <ClInclude Include="Audio\AudioPreprocessor.h" />
     <ClInclude Include="API\sLoadModelCallbacks.h" />
     <ClInclude Include="API\sModelSetup.h" />
     <ClInclude Include="API\SpecialTokens.h" />

@@ -65,6 +65,7 @@
     <ClCompile Include="Utils\Logger.cpp" />
     <ClCompile Include="Whisper\ContextImpl.capture.cpp" />
     <ClCompile Include="Whisper\voiceActivityDetection.cpp" />
+    <ClCompile Include="Audio\AudioPreprocessor.cpp" />
     <ClCompile Include="CPU\LargeBuffer.cpp" />
     <ClCompile Include="CPU\ParallelForRunner.cpp" />
     <ClCompile Include="CPU\simdUtils.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="API\iTranscribeResult.cl.h" />
     <ClInclude Include="Whisper\TranscribeResult.h" />
     <ClInclude Include="Utils\ReadStream.h" />
+    <ClInclude Include="Audio\AudioPreprocessor.h" />
     <ClInclude Include="API\SpecialTokens.h" />
     <ClInclude Include="Whisper\sTokenData.h" />
     <ClInclude Include="resource.h" />

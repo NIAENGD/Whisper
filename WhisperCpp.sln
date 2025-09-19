@@ -36,6 +36,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrophoneCS", "Examples\Mi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "compareTraces", "Tools\compareTraces\compareTraces.vcxproj", "{8478A77C-D851-4C63-9511-1770CC82D33E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RNNoise", "ThirdParty\RNNoise\RNNoise.vcxproj", "{BAD9EBAB-8F1E-468A-873C-D45413628F05}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WhisperDesktop", "Examples\WhisperDesktop\WhisperDesktop.vcxproj", "{CD9E49F0-75A3-4F91-AC71-336109EE39C6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{17835CA3-D7F6-4BEF-9471-12C015764A2C}"
@@ -94,6 +96,10 @@ Global
 		{A49305C0-7022-45A6-89B4-4BD33138C98A}.Debug|x64.Build.0 = Debug|x64
 		{A49305C0-7022-45A6-89B4-4BD33138C98A}.Release|x64.ActiveCfg = Release|x64
 		{A49305C0-7022-45A6-89B4-4BD33138C98A}.Release|x64.Build.0 = Release|x64
+		{BAD9EBAB-8F1E-468A-873C-D45413628F05}.Debug|x64.ActiveCfg = Debug|x64
+		{BAD9EBAB-8F1E-468A-873C-D45413628F05}.Debug|x64.Build.0 = Debug|x64
+		{BAD9EBAB-8F1E-468A-873C-D45413628F05}.Release|x64.ActiveCfg = Release|x64
+		{BAD9EBAB-8F1E-468A-873C-D45413628F05}.Release|x64.Build.0 = Release|x64
 		{8478A77C-D851-4C63-9511-1770CC82D33E}.Debug|x64.ActiveCfg = Debug|x64
 		{8478A77C-D851-4C63-9511-1770CC82D33E}.Debug|x64.Build.0 = Debug|x64
 		{8478A77C-D851-4C63-9511-1770CC82D33E}.Release|x64.ActiveCfg = Release|x64

@@ -3,6 +3,7 @@
 #include <mfapi.h>
 #include "MelStreamer.h"
 #include "../API/iMediaFoundation.cl.h"
+#include "../Audio/AudioPreprocessor.h"
 #include "../Utils/Trace/tracing.h"
 using namespace Whisper;
 
@@ -359,33 +360,36 @@ int ContextImpl::wrapSegment( int max_len )
 HRESULT COMLIGHTCALL ContextImpl::runFull( const sFullParams& params, const iAudioBuffer* buffer )
 {
 #if SAVE_DEBUG_TRACE
-	Tracing::vector( "runFull.pcm.in", buffer->getPcmMono(), buffer->countSamples() );
+        Tracing::vector( "runFull.pcm.in", buffer->getPcmMono(), buffer->countSamples() );
 #endif
-	CHECK( buffer->getTime( mediaTimeOffset ) );
 
-	auto profCompleteCpu = profiler.cpuBlock( eCpuBlock::RunComplete );
-	{
-		auto p = profiler.cpuBlock( eCpuBlock::Spectrogram );
-		CHECK( spectrogram.pcmToMel( buffer, model.shared->filters, params.cpuThreads ) );
-	}
+        AudioPreprocessor preprocessor;
+        CHECK( preprocessor.initialize( buffer ) );
+        mediaTimeOffset = preprocessor.timeOffset();
 
-	if( params.flag( eFullParamsFlags::TokenTimestamps ) )
-	{
-		t_beg = 0;
-		t_last = 0;
-		tid_last = 0;
-		computeSignalEnergy( energy, buffer, 32 );
-	}
+        auto profCompleteCpu = profiler.cpuBlock( eCpuBlock::RunComplete );
+        {
+                auto p = profiler.cpuBlock( eCpuBlock::Spectrogram );
+                CHECK( spectrogram.pcmToMel( preprocessor.cleanedBuffer(), model.shared->filters, params.cpuThreads ) );
+        }
 
-	try
-	{
-		sProgressSink progressSink{ nullptr, nullptr };
-		return runFullImpl( params, progressSink, spectrogram );
-	}
-	catch( HRESULT hr )
-	{
-		return hr;
-	}
+        if( params.flag( eFullParamsFlags::TokenTimestamps ) )
+        {
+                t_beg = 0;
+                t_last = 0;
+                tid_last = 0;
+                computeSignalEnergy( energy, preprocessor.originalBuffer(), 32 );
+        }
+
+        try
+        {
+                sProgressSink progressSink{ nullptr, nullptr };
+                return runFullImpl( params, progressSink, spectrogram );
+        }
+        catch( HRESULT hr )
+        {
+                return hr;
+        }
 }
 
 HRESULT COMLIGHTCALL ContextImpl::runStreamed( const sFullParams& params, const sProgressSink& progress, const iAudioReader* reader )

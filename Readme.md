@@ -63,6 +63,16 @@ On the CPU side, the library requires [AVX1](https://en.wikipedia.org/wiki/Advan
 
 ## Build Instructions
 
+### Automated build script (Windows only)
+
+The repository now includes a helper script that automates producing a Release build of the native desktop client on Windows.
+
+1. Open a regular Command Prompt or PowerShell window on Windows.
+2. Run `build-windows-release.bat` from the repository root.
+3. When the script finishes, the packaged binaries are located under `Release\NativeClient`, and a ready-to-distribute archive is written to `Release\WhisperDesktop.zip`.
+
+The script downloads the required Visual Studio Build Tools (including MSBuild) if they are not already present, along with helper utilities such as `nuget.exe` and `vswhere.exe`. It then restores all NuGet dependencies, builds the compute shaders, compresses them, and compiles every required project before packaging the final desktop application.
+
 1. Clone this repository
 
 2. Open `WhisperCpp.sln` in Visual Studio 2022. I’m using the freeware community edition, version 17.4.4.
